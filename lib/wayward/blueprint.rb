@@ -1,4 +1,4 @@
-module Wayward
+class Wayward < OpenStruct
 
   class Blueprint < OpenStruct
 

@@ -69,7 +69,7 @@ To update a record:
 ```ruby
   thing = Wayward::Thing.where(id: 3769).first
   thing.some_attr = 'new value'
-  thing.save
+  thing.save # => true/false
 ```
 
 ## Contributing

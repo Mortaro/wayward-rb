@@ -61,7 +61,7 @@ To create a record:
 To fetch records:
 
 ```ruby
-  Wayward::Thing.where(some_attr: 'some value', other_attr: 'some value') # => [#<Wayward::Thing>, #<Wayward::Thing>]
+  Wayward::Thing.where(some_attr: 'some value', other_attr: 'some value') # => [#<Wayward::Thing>]
 ```
 
 To update a record:

@@ -11,7 +11,7 @@ class Wayward < OpenStruct
   end
 
   def self.configure
-    self.configuration ||= OpenStruct.new api_version: 'v1'
+    self.configuration ||= OpenStruct.new api_version: 'v1', domain: 'www.wayward.com.br'
     yield(configuration)
   end
 
@@ -26,7 +26,7 @@ class Wayward < OpenStruct
       req['email'] = Wayward.configuration.email
       req['secret'] = Wayward.configuration.secret
       req.set_form_data(to_h)
-      http = Net::HTTP.new('www.wayward.com.br').start {|http| http.request(req) }
+      http = Net::HTTP.new(Wayward.configuration.domain, Wayward.configuration.port).start {|http| http.request(req) }
       response = JSON.parse(http.body.force_encoding('UTF-8'), symbolize_names: true)
     rescue Exception => ex
       response = {errors: [ex.message]}

@@ -58,6 +58,14 @@ To create a record:
   thing.save # => true/false
 ```
 
+To create a record with multiple blocks
+```ruby
+  thing = Wayward::Thing.new
+  thing.block_name = [{some_attr: 'some value'}, {some_attr: 'some other value'}]
+  thing.other_attr = 'some value'
+  thing.save # => true/false
+```
+
 To fetch records:
 
 ```ruby

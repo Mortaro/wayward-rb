@@ -8,7 +8,7 @@ class Wayward < OpenStruct
         req = Net::HTTP::Get.new(search_endpoint, initheader = {'Content-Type' =>'application/json'})
         req['email'] = Wayward.configuration.email
         req['secret'] = Wayward.configuration.secret
-        http = Net::HTTP.new('www.wayward.com.br').start {|http| http.request(req) }
+        http = Net::HTTP.new(Wayward.configuration.domain, Wayward.configuration.port).start {|http| http.request(req) }
         response = JSON.parse(http.body, symbolize_names: true)
       rescue Exception => ex
         response = []
@@ -27,8 +27,8 @@ class Wayward < OpenStruct
           req = Net::HTTP::Post.new(post_endpoint, initheader = {'Content-Type' =>'application/json'})
           req['email'] = Wayward.configuration.email
           req['secret'] = Wayward.configuration.secret
-          req.set_form_data(to_h)
-          http = Net::HTTP.new('www.wayward.com.br').start {|http| http.request(req) }
+          req.set_form_data(form: to_h.to_json)
+          http = Net::HTTP.new(Wayward.configuration.domain, Wayward.configuration.port).start {|http| http.request(req) }
           response = JSON.parse(http.body.force_encoding('UTF-8'), symbolize_names: true)
         rescue Exception => ex
           response = {errors: [ex.message]}
@@ -43,8 +43,8 @@ class Wayward < OpenStruct
           req = Net::HTTP::Post.new(put_endpoint, initheader = {'Content-Type' =>'application/json'})
           req['email'] = Wayward.configuration.email
           req['secret'] = Wayward.configuration.secret
-          req.set_form_data(to_h.merge(_method: 'PUT'))
-          http = Net::HTTP.new('www.wayward.com.br').start {|http| http.request(req) }
+          req.set_form_data(form: to_h.merge(_method: 'PUT').to_json)
+          http = Net::HTTP.new(Wayward.configuration.domain, Wayward.configuration.port).start {|http| http.request(req) }
           response = JSON.parse(http.body.force_encoding('UTF-8'), symbolize_names: true)
         rescue Exception => ex
           response = {errors: [ex.message]}
